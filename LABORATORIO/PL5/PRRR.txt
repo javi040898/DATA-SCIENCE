@@ -1,0 +1,4 @@
+(muestra=matrix(c(4,4,4,3,5,5,1,1,5,4),2,5))
+(muestra=t(muestra))
+(distancia=as.matrix(dist(muestra)))
+(distancias=matrix(distancia,5,5))

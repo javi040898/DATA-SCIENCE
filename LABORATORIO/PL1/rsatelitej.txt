@@ -1,0 +1,72 @@
+s<-read.table("satelites.txt") --leer tabla
+s --ver tabla
+so<-s[order(s$Radio),] --ordenar de mayor a menor
+so
+so<-s[rev(order(s$Radio)),] --ordenar al reves
+so
+length(s$Radio); --ver numero de datos de una variable (Radio en este caso)
+rangor=max(s$Radio)-min(s$Radio) --calcular rango
+rangor --mostrar rango calculado
+Radio=s$Radio --definir funcion
+Radio --mostrar funcion
+rango=function(Radio){max(Radio)-min(Radio)}
+rango
+dump("rango",file="rango.R") --guardar funcion en fichero (definicion)
+source("rango.R") --guardarlo
+frecabsradio<-table(s$Radio) --frecuencia absoluta
+frecabsradio
+frecabsacumradio<-cumsum(frecabsradio) --frecuencia absoluta acumulada
+frecabsacumradio
+frecrel<-function(x){table(x)/length(x)} --frecuencia relativa
+dump("frecrel",file="frecrel.R");
+source("frecrel.R")
+x=s$Radio
+frecrelradio<-frecrel(x)
+frecrelradio
+frecrelacumradio<-cumsum(frecrelradio) --frecuencia relativa acumulada
+frecrelacumradio
+mr<-mean(s$Radio) --calcular media del radio
+mr
+--medidas dispers (dividen entre n-1, ya que asi el parametro es mas centrado)
+sdr<-sd(s$Radio) --desviacion tipica del radio
+sdr
+varr<-var(s$Radio) --varianza del radio
+varr
+sqrt() --raiz cuadrada
+--dividir entre n como en teoria
+sdr=sqrt((sdr^2)*11/12)
+sdr
+varr=varr*11/12
+varr
+--medidas ordenacion
+medianr<-median(s$Radio) --mediana del radio
+medianr
+cuar1r<-quantile(s$Radio,0.25) --cuartil 1 del radio
+cuar1r
+cuar2r<-quantile(s$Radio,0.5) --cuartil 2 del radio
+cuar2r
+cuar3r<-quantile(s$Radio,0.75) --cuartil 3 del radio
+cuar3r
+cuar54<-quantile(s$Radio,0.54)
+cuar54r
+
+--leer fichero de tipo no redactable 
+s2<-read.table("cardata.sav") --da error
+library() --paquetes que tenemos en la libreria estandar (pueden ser cargados)
+library(foreign) --cargamos paquete foreign
+search() --ver paquetes cargados (tiene que aparecernos foreign ahora)
+A=read.spss("cardata.sav");
+mpg=A$mpg --obtenemos variable mpg de cardata.sav
+mpg
+mean(mpg) --sale NA->descubrir cual es el dato y limpiarlo (ej:ventiladores de los tuneles)
+mpg<-mpg[!is.na(mpg)] --limpiar valores NAs
+mpg --ya no nos aparecen valores NA
+mean(mpg) --ya nos aparece la media correctamente
+summary(mpg) --devuelve min, primer cuartil, mediana, media, tercer cuartil y max de mpg
+fivenum(mpg) --los cinco numeros definidos por Tuckey (los mismos de summary)
+
+--sweave (ficheros .Rnw)
+rnwfile<-system.file("Sweave","example-1.Rnw",package="utils");
+Sweave(rnwfile) --aparece una imagen .tex del pdf que se utilizara en el pdf final
+tools::texi2pdf("example-1.tex") --pasar tex al pdf final
+--ENTREGAR: rnw, tex y pdf final

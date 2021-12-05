@@ -1,0 +1,140 @@
+\subsection{Algoritmo Kmeans}
+@
+
+Llamamos a la función kmeans() para realizar la clasificación según los colores obtenidos de la imagen. A continuación, creamos colores con rgb() a partir de los centroides obtenidos anteriormente:
+
+<<>>= 
+clasifKmeans <- kmeans(coloresRGB[, c("R", "G", "B")], centers = numClust)
+numColors <- rgb(clasifKmeans$centers[clasifKmeans$cluster,])
+@
+
+Una vez obtenidos los colores, los asignaremos a la gráfica que se creará con ggplot():
+
+<<Figura 2: kmeans 2 clusters, fig=TRUE, echo=True>>=
+
+ggplot(data = coloresRGB, aes(x = x, y = y)) + 
+  geom_point(colour = numColors) +
+  labs(title = paste("Resultados Kmeans para ", numClust, " clusters. "))
+@
+
+
+
+Si aumentamos el número de clústers y volvemos a realizar el algoritmo, la imagen toma más colores:
+
+<<Figura 3: kmeans 6 clusters, fig=TRUE, echo=True>>=
+numClust <- 6
+#ALGORITMO KMEANS
+clasifKmeans <- kmeans(coloresRGB[, c("R", "G", "B")], centers = numClust)
+numColors <- rgb(clasifKmeans$centers[clasifKmeans$cluster,])
+ggplot(data = coloresRGB, aes(x = x, y = y)) + 
+  geom_point(colour = numColors) +
+  labs(title = paste("Resultados Kmeans para ", numClust, " clusters. "))
+@
+
+Cuantos más clústers se apliquen al algoritmo, más nitidez tendrá la imagen generada:
+
+<<Figura 4: kmeans 13 clusters, fig=TRUE, echo=True>>=
+numClust <- 13
+#ALGORITMO KMEANS
+clasifKmeans <- kmeans(coloresRGB[, c("R", "G", "B")], centers = numClust)
+numColors <- rgb(clasifKmeans$centers[clasifKmeans$cluster,])
+ggplot(data = coloresRGB, aes(x = x, y = y)) + 
+  geom_point(colour = numColors) +
+  labs(title = paste("Resultados Kmeans para ", numClust, " clusters. "))
+@
+
+\subsection{Algoritmo CLARA}
+
+Para realizar el algoritmo CLARA, necesitamos instalar previamente las liberías cluster y factoextra:
+
+<<>>=
+install.packages(c("cluster", "factoextra"))
+library(cluster)
+library(factoextra)
+@
+
+A continuación, llamamos a la función clara() para realizar la clasificación a partir de los colores del mismo dataframe utilizado para kmeans, que siga una métrica euclidean (también se pueden hacer cálculos con la métrica manhattan) y para un número de 10 muestras:
+
+<<>>=
+clasifClara <- clara(coloresRGB, numClust, metric = "euclidean", stand = FALSE, samples = 10, pamLike = FALSE)
+clasifClara
+@
+
+Para visualizar los resultados obtenidos hacemos uso de la función fviz_cluster(), a la que asignaremos: 
+-Los datos obtenidos de la clasificación con CLARA.
+-El tipo de elipse t, que asume una distribución de tipo t multivariable.
+-El tipo de texto utilizado para representar los datos en la gráfica, que en nuestro caso será point de tal forma que solo se muestran los puntos en la gráfica sin etiquetas.
+-Especificación del tamaño de los puntos representativos de los datos, en el que se ha elegido un tamaño de 2.5 unidades.
+
+<<Figura 5: CLARA 10 muestras, fig=TRUE, echo=True>>=
+
+fviz_cluster(object = clasifClara, ellipse.type = "t", geom = "point",
+             pointsize = 2.5) +
+  labs(title = "Resultados CLARA")
+@
+
+\section{Tercera parte}
+
+En esta última parte vamos a analizar y utilizar el paquete LearnClust, que contiene funciones que permiten hacer cálculos mediante algoritos de clustering jerárquico. Para ello, necesitamos instalar la librería LearnClust:
+
+<<>>=
+install.packages("LearnClust")
+library(LearnClust)
+@
+
+Para probar algunas funciones ofrecidas por esta libería, hacemos uso del enunciado del ejercicio realizado en la primera parte de esta práctica. Para el análisis de otras funciones se utilizarán otros ejemplos.
+
+\subsection{AgglomerativeHC}
+
+Esta función ejecuta el algoritmo de clustering jerárquico aglomerativo completo tomando como parámetros el tipo de distancia y aproximamiento en forma de string.
+
+<<>>=
+m<-matrix(c(4,4, 3,5, 1,2, 5,5, 0,1, 2,2, 4,5, 2,1),2,8)
+agglomerativeHC(m,'EUC','MAX')
+@
+
+<<Figura 6: gráfica clustering aglomerativo, fig=TRUE, echo=True>>=
+
+agglomerativeHC(m,'EUC','MAX')
+@
+
+\subsection{AgglomerativeHC.details}
+
+Explica los pasos realizados en el algoritmo aglomerativo explicado en el apartado anterior sobre un conjunto de datos a resolver.
+
+<<>>=
+agglomerativeHC.details(m,'EUC','MAX')
+@
+
+\subsection{toList}
+
+Convierte un conjunto de datos numérico en una lista. Dicho conjunto de datos puede ser una matriz, un vector o un dataframe.
+
+<<>>=
+lst<-toList(m)
+m
+@
+
+\subsection{octileDistance}
+
+Calcula la distancia octil entre dos clústers.
+
+<<>>=
+x <- c(1,2)
+y <- c(1,3)
+octileDistance(x,y)
+@
+
+\subsection{canberradistance}
+
+Calcula la distancia de Canberra entre dos clústers.
+
+<<>>=
+canberradistance(x,y)
+@
+
+\section{Conclusiones}
+
+El lenguaje R nos permite aplicar de forma sencilla y eficaz los algoritmos de clasificación no supervisada, además de que nos facilita representar de forma gráfica los resultados obtenidos de la aplicación de dichos algoritmos. En nuestro caso se han aplicado Kmeans y CLARA, en donde hemos podido comprobar que, aunque ambos algoritmos son de agrupamiento por particiones, CLARA es más apropiado para conjuntos muy grandes de datos mientras que Kmeans puede abarcar más tamaños. Por último, hemos probado el paquete LearnClust, que permite realizar cálculos a través de los algoritmos de agrupamiento jerárquico.
+
+@

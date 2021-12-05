@@ -1,0 +1,30 @@
+\contentsline {section}{\numberline {1}Análisis de asociación cesta compra }{3}{}%
+\contentsline {subsection}{\numberline {1.1}Pasos iniciales}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Asociación}{3}{}%
+\contentsline {subsubsection}{\numberline {1.2.1}Apriori}{5}{}%
+\contentsline {subsubsection}{\numberline {1.2.2}Eclat}{5}{}%
+\contentsline {subsubsection}{\numberline {1.2.3}Representación gráfica de Apriori}{7}{}%
+\contentsline {subsubsection}{\numberline {1.2.4}Representación gráfica de Eclat}{9}{}%
+\contentsline {section}{\numberline {2}Análisis de asociación compra de ropa }{10}{}%
+\contentsline {subsection}{\numberline {2.1}Lectura datos Excel}{10}{}%
+\contentsline {subsection}{\numberline {2.2}Asociación desde el archivo Excel}{10}{}%
+\contentsline {subsubsection}{\numberline {2.2.1}Apriori desde el archivo Excel}{12}{}%
+\contentsline {subsection}{\numberline {2.3}Lectura datos txt}{13}{}%
+\contentsline {subsection}{\numberline {2.4}Asociación desde el archivo txt}{13}{}%
+\contentsline {subsubsection}{\numberline {2.4.1}Apriori desde el archivo txt}{15}{}%
+\contentsline {subsubsection}{\numberline {2.4.2}Eclat}{16}{}%
+\contentsline {subsubsection}{\numberline {2.4.3}Representación gráfica de Apriori}{17}{}%
+\contentsline {subsubsection}{\numberline {2.4.4}Representación gráfica de Eclat}{18}{}%
+\contentsline {section}{\numberline {3}Análisis de asociación de compras en tecnología}{20}{}%
+\contentsline {subsection}{\numberline {3.1}Lectura de datos desde archivo Excel}{20}{}%
+\contentsline {subsection}{\numberline {3.2}Algoritmo Apriori}{20}{}%
+\contentsline {subsection}{\numberline {3.3}Algoritmo Eclat}{22}{}%
+\contentsline {subsection}{\numberline {3.4}Representación gráfica de Apriori}{23}{}%
+\contentsline {subsection}{\numberline {3.5}Representación gráfica de Eclat}{25}{}%
+\contentsline {section}{\numberline {4}Análisis de asociación de compras en papeleria }{26}{}%
+\contentsline {subsection}{\numberline {4.1}Lectura de datos desde archivo Excel}{26}{}%
+\contentsline {subsection}{\numberline {4.2}Algoritmo Apriori}{27}{}%
+\contentsline {subsection}{\numberline {4.3}Algoritmo Eclat}{28}{}%
+\contentsline {subsection}{\numberline {4.4}Representación gráfica de Apriori}{29}{}%
+\contentsline {subsection}{\numberline {4.5}Representación gráfica de Eclat}{31}{}%
+\contentsline {section}{\numberline {5}Conclusiones}{32}{}%

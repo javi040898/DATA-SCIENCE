@@ -1,0 +1,12 @@
+\contentsline {section}{\numberline {1}Primera parte}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Análisis de clasificación no supervisada}{3}{}%
+\contentsline {section}{\numberline {2}Segunda parte}{5}{}%
+\contentsline {subsection}{\numberline {2.1}Algoritmo Kmeans}{6}{}%
+\contentsline {subsection}{\numberline {2.2}Algoritmo CLARA}{8}{}%
+\contentsline {section}{\numberline {3}Tercera parte}{9}{}%
+\contentsline {subsection}{\numberline {3.1}AgglomerativeHC}{10}{}%
+\contentsline {subsection}{\numberline {3.2}AgglomerativeHC.details}{11}{}%
+\contentsline {subsection}{\numberline {3.3}toList}{12}{}%
+\contentsline {subsection}{\numberline {3.4}octileDistance}{12}{}%
+\contentsline {subsection}{\numberline {3.5}canberradistance}{12}{}%
+\contentsline {section}{\numberline {4}Conclusiones}{12}{}%

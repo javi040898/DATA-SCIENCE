@@ -1,0 +1,324 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.10) (preloaded format=pdflatex 2020.10.23)  15 DEC 2020 10:33
+entering extended mode
+**"C:/Users/Javier/Desktop/INFORMATICA/FUNDAMENTOS DE CIENCIA DE DATOS/LABORATO
+RIO/PL4/G.1-PL4/Memoria.tex"
+
+("C:/Users/Javier/Desktop/INFORMATICA/FUNDAMENTOS DE CIENCIA DE DATOS/LABORATOR
+IO/PL4/G.1-PL4/Memoria.tex"
+LaTeX2e <2020-10-01> patch level 1
+L3 programming layer <2020-10-05> xparse <2020-03-03> (C:\Users\Javier\AppData\
+Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
+File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count175
+\c@section=\count176
+\c@subsection=\count177
+\c@subsubsection=\count178
+\c@paragraph=\count179
+\c@subparagraph=\count180
+\c@figure=\count181
+\c@table=\count182
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+Package: inputenc 2020/08/01 v1.3d Input encoding file
+\inpenc@prehook=\toks15
+\inpenc@posthook=\toks16
+) (C:/PROGRA~1/R/R-40~1.3/share/texmf/tex/latex\Sweave.sty
+Package: Sweave 
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+) (C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.st
+y
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+) (C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.st
+y
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.
+cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.de
+f
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen139
+\Gin@req@width=\dimen140
+) (C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/fancyvrb\fancyvrb.st
+y
+Package: fancyvrb 2020/05/03 v3.6 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count183
+\FV@InFile=\read2
+\FV@TabBox=\box47
+\c@FancyVerbLine=\count184
+\FV@StepNumber=\count185
+\FV@OutFile=\write3
+) (C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
+) (C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/ae\ae.sty
+Package: ae 2001/02/12 1.3 Almost European Computer Modern
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
+)))
+LaTeX Font Info:    Trying to load font information for T1+aer on input line 6.
+
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/ae\t1aer.fd
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+)
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pd
+ftex.def
+File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
+\l__kernel_color_stack_int=\count186
+\l__pdf_internal_box=\box48
+) (Memoria.aux
+
+LaTeX Warning: Label `fig:original' multiply defined.
+
+
+LaTeX Warning: Label `fig:original' multiply defined.
+
+
+LaTeX Warning: Label `fig:original' multiply defined.
+
+
+LaTeX Warning: Label `fig:original' multiply defined.
+
+)
+\openout1 = `Memoria.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.m
+kii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count187
+\scratchdimen=\dimen141
+\scratchbox=\box49
+\nofMPsegments=\count188
+\nofMParguments=\count189
+\everyMPshowfont=\toks18
+\MPscratchCnt=\count190
+\MPscratchDim=\dimen142
+\MPnumerator=\count191
+\makeMPintoPDFobject=\count192
+\everyMPtoPDFconversion=\toks19
+)
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-
+base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.
+sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+) (C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/grfext\grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefin
+ekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+))
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.st
+y
+Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.
+sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+))
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmd
+s.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 7.
+C:/Users/Javier/Desktop/INFORMATICA/FUNDAMENTOS DE CIENCIA DE DATOS/LABORATORIO
+/PL4/G.1-PL4/Memoria.tex:7: Extra alignment tab has been changed to \cr.
+<recently read> \endtemplate 
+                             
+l.7 \maketitle
+              
+You have given more \span or & marks than there were
+in the preamble to the \halign or \valign now in progress.
+So I'll assume that you meant to type \cr instead.
+
+ [1
+
+{C:/Users/Javier/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
+(Memoria.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+)
+\tf@toc=\write4
+\openout4 = `Memoria.toc'.
+
+ [2]
+LaTeX Font Info:    Trying to load font information for T1+aett on input line 2
+8.
+
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/ae\t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+) [3] [4]
+<./eagle.png, id=21, 1671.24374pt x 1155.31625pt>
+File: ./eagle.png Graphic file (type png)
+<use ./eagle.png>
+Package pdftex.def Info: ./eagle.png  used on input line 188.
+(pdftex.def)             Requested size: 200.75073pt x 138.773pt.
+ [5 <./eagle.png>]
+<./eagle2clusters.png, id=27, 466.74374pt x 486.01575pt>
+File: ./eagle2clusters.png Graphic file (type png)
+<use ./eagle2clusters.png>
+Package pdftex.def Info: ./eagle2clusters.png  used on input line 232.
+(pdftex.def)             Requested size: 200.75073pt x 209.04202pt.
+<./eagle6clusters.png, id=28, 469.15276pt x 474.573pt>
+File: ./eagle6clusters.png Graphic file (type png)
+<use ./eagle6clusters.png>
+Package pdftex.def Info: ./eagle6clusters.png  used on input line 242.
+(pdftex.def)             Requested size: 200.75073pt x 203.07034pt.
+<./eagle13clusters.png, id=29, 469.755pt x 479.391pt>
+File: ./eagle13clusters.png Graphic file (type png)
+<use ./eagle13clusters.png>
+Package pdftex.def Info: ./eagle13clusters.png  used on input line 251.
+(pdftex.def)             Requested size: 200.75073pt x 204.86864pt.
+ [6 <./eagle2clusters.png>] [7 <./eagle6clusters.png> <./eagle13clusters.png>] 
+[8]
+C:/Users/Javier/Desktop/INFORMATICA/FUNDAMENTOS DE CIENCIA DE DATOS/LABORATORIO
+/PL4/G.1-PL4/Memoria.tex:311: Missing $ inserted.
+<inserted text> 
+                $
+l.311 ...btenidos hacemos uso de la función fviz_
+                                                  cluster.
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+C:/Users/Javier/Desktop/INFORMATICA/FUNDAMENTOS DE CIENCIA DE DATOS/LABORATORIO
+/PL4/G.1-PL4/Memoria.tex:312: Missing $ inserted.
+<inserted text> 
+                $
+l.312 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (0.76149pt too wide) in paragraph at lines 311--312
+[]\T1/aer/m/n/10 Para vi-su-alizar los re-sul-ta-dos obtenidos hace-mos uso de 
+la fun-ci�n fviz$[]\OML/cmm/m/it/10 luster:$ 
+ []
+
+<./graficoClara.png, id=43, 477.58424pt x 484.81125pt>
+File: ./graficoClara.png Graphic file (type png)
+<use ./graficoClara.png>
+Package pdftex.def Info: ./graficoClara.png  used on input line 321.
+(pdftex.def)             Requested size: 250.93842pt x 254.73685pt.
+ [9 <./graficoClara.png>]
+LaTeX Font Info:    Trying to load font information for TS1+aett on input line 
+356.
+
+(C:/PROGRA~1/R/R-40~1.3/share/texmf/tex/latex\ts1aett.fd
+File: ts1aett.fd 
+)
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
+356.
+
+(C:\Users\Javier\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmtt.fd
+File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `TS1/aett/m/sl' in size <10> not available
+(Font)              Font shape `TS1/cmtt/m/sl' tried instead on input line 356.
+
+ [10]
+<Memoria-Figura 6: gráfica clustering aglomerativo.pdf, id=54, 433.62pt x 433.
+62pt>
+File: Memoria-Figura 6: gráfica clustering aglomerativo.pdf Graphic file (type
+ pdf)
+<use Memoria-Figura 6: gráfica clustering aglomerativo.pdf>
+Package pdftex.def Info: Memoria-Figura 6: gráfica clustering aglomerativo.pdf
+  used on input line 413.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+
+Overfull \hbox (1.81573pt too wide) in paragraph at lines 417--418
+\T1/aer/m/n/10 Explica los pa-sos re-al-iza-dos en el al-go-ritmo aglom-er-a-ti
+vo ex-pli-cado en el apartado
+ []
+
+ [11 <./Memoria-Figura 6: gráfica clustering aglomerativo.pdf>] [12] (Memoria.
+aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 2570 strings out of 480236
+ 40641 string characters out of 2880082
+ 309020 words of memory out of 3000000
+ 19045 multiletter control sequences out of 15000+200000
+ 563249 words of font info for 84 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 72i,6n,77p,741b,329s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\Javier\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcs
+t1000.pk><C:/Users/Javier/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
+onts/cm/cmb10.pfb><C:/Users/Javier/AppData/Local/Programs/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmmi10.pfb><C:/Users/Javier/AppData/Local/Programs/MiKTeX/font
+s/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Javier/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Javier/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Javier/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/Javie
+r/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Use
+rs/Javier/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsltt10
+.pfb><C:/Users/Javier/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
+/cm/cmtt10.pfb>
+Output written on Memoria.pdf (12 pages, 2307171 bytes).
+PDF statistics:
+ 100 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+

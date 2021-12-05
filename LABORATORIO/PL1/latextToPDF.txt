@@ -1,0 +1,2 @@
+Sweave("example.Rnw")
+tools::texi2pdf("example.tex")

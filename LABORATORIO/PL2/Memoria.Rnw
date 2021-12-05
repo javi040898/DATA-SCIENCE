@@ -1,0 +1,463 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{PRÁCTICA 2 FUNDAMENTOS DE LA CIENCIA DE DATOS}
+\author{Javier Martín Gómez, Ignacio Afuera Díaz, Laura Gil Gómez, & Christian Ayala Urbanos}
+\usepackage{Sweave}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+En esta práctica hemos realizado un análisis de asociación de datos con R. Para ello,
+hemos utilizado el algoritmo de asociación de datos visto en clase, el algoritmo
+apriori. Además, hemos utilizado otro extra, llamado eclat. Para poder usar estos
+algoritmos hemos tenido que instalar el paquete y librería arules, y para su
+la visualización de las asociaciones, hemos utilizado arulesViz.
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Análisis de asociación cesta compra }
+@
+En esta sección, vamos a realizar el análisis de asociación del ejercicio realizado
+en clase. Primero, hemos utilizado el algoritmo apriori (visto en clase) y después,
+hemos utilizado una alternativa a dicho algoritmo llamada eclat.
+\subsection{Pasos iniciales}
+@
+Lo primero antes de realizar cualquier algoritmo hay que cargar los datos, en este
+primer ejercicio la realizaremos directamente desde el código:
+
+<<>>=
+muestra<-Matrix(c(1,1,0,1,1, 1,1,1,1,0, 1,1,0,1,0,1,0,1,1,0, 
+1,1,0,0,0, 0,0,0,1,0),6,5,byrow=TRUE,dimnames=list(
+c("Suceso1","Suceso2","Suceso3","Suceso4","Suceso5","Suceso6"),
+c("Pan","Agua","Cafe","Leche","Naranjas")),sparse=TRUE)
+@
+
+Quedaría la siguiente matriz:
+
+<<>>=
+muestra
+@
+
+Tambien hay que cargar la librería usada:
+
+<<>>=
+library(arules)
+@
+
+\subsection{Asociación}
+@
+Ahora realizamos las siguientes operaciones para adaptar la matriz a la función
+que se va a utilizar en el siguiente paso: construimos una matriz nsparse y 
+la transponemos:
+
+<<>>=
+muestrangCMatrix<-as(muestra,"nsparseMatrix")
+muestrangCMatrix
+
+transpmuestratrangCMatrix<-t(muestrangCMatrix)
+transpmuestratrangCMatrix
+@
+A continuación, se obtendrán las transacciones a partir de la matriz mostrada anteriormente y un resumen de ellas:
+
+<<>>=
+transacciones<-as(transpmuestratrangCMatrix,"transactions")
+inspect(transacciones)
+summary(transacciones)
+@
+
+\subsubsection{Apriori}
+@
+Finalmente, obtendremos las asociaciones de la matriz que hemos cargado anteriormente a través del algoritmo apriori
+con soporte 0.5 y confianza 0.8 para este caso.
+
+<<>>=
+asociacionesap<-apriori(transacciones,parameter=list(support=0.5,confidence=0.8))
+inspect(asociacionesap)
+@
+
+\subsubsection{Eclat}
+El algoritmo Apriori no es perfecto y han aparecido algunos algoritmos basados en
+árboles para superar las dificultades presentadas por Apriori. Uno de ellos es Eclat, el cual combina la búsqueda en profundidad con una lista de todos los
+identificadores de las transacciones.
+
+Ahora lo aplicaremos en el ejemplo de la cesta de la compra, para ello haremos uso de dos funciones: eclat y ruleInduction. Antes de aplicar estas funciones, debemos obtener las transacciones de la misma manera que se vio en el algoritmo Apriori.
+
+En primer lugar usamos la función eclat, aqui especificamos unícamente el soporte (supp=0.5).
+<<>>=
+itemsets <- eclat(transacciones, parameter = list(supp = 0.5, maxlen = 5))
+@
+
+En segundo lugar usamos la función ruleInduction, donde se indica la confianza
+y las transacciones (confidence = 0.8):
+<<>>=
+rules <- ruleInduction(itemsets, transacciones, confidence = 0.8)
+inspect(rules)
+@
+
+@
+\newpage
+\subsubsection{Representación gráfica de Apriori}
+@
+A continuación, vamos a representar los resultados obtenidos anteriormente en forma de gráfica. Para ello llamamos a la función plot usando la librería aRulesViz.
+Se representa un grafo dirigido en el que se ven las asociaciones:
+\newline
+<<Figura 1, fig=TRUE, echo=FALSE>>=
+plot(asociacionesap,method = "graph")
+@
+\newline
+Ahora mostramos la gráfica en forma de puntos dispersos. Cada uno de los puntos representa una asociación.
+\newline
+<<Figura 2, fig=TRUE, echo=FALSE>>=
+plot(asociacionesap,method = "scatterplot")
+@
+@
+\subsubsection{Representación gráfica de Eclat}
+
+Hacemos lo mismo para representar los datos obtenidos con el algoritmo Eclat.
+\newline
+<<Figura 3, fig=TRUE, echo=FALSE>>=
+plot(asociacionesec,method = "graph")
+@
+\newline
+<<Figura 4, fig=TRUE, echo=FALSE>>=
+plot(asociacionesec,method = "scatterplot")
+@
+
+\section{Análisis de asociación compra de ropa }
+@
+En esta sección, vamos a analizar la asociación de diferentes compras de prendas de ropa.
+Al igual que en el apartado anterior, vamos a utilizar los algoritmos apriori y eclat,
+con la diferencia de que ahora vamos a leer los datos de un archivo Excel y de un archivo
+txt.
+
+\subsection{Lectura datos Excel}
+@
+Para leer los datos del archivo Excel, primero tenemos que instalar los paquetes
+y librerías necesarios
+
+<<>>=
+install.packages("pastecs")
+install.packages("xlsx")
+
+library(pastecs)
+library(xlsx)
+@
+
+Ahora, leemos los datos del archivo Excel y los visualizamos en forma de matriz:
+
+<<>>=
+datosExcel<-Matrix(as.matrix(read.xlsx("ropa.xlsx", 1)),byrow=TRUE, sparse=TRUE )
+datosExcel
+@
+
+\subsection{Asociación desde el archivo Excel}
+@
+Para realizar la asociación, tenemos que adaptar la matriz a la función
+que se va a utilizar en el siguiente paso. A continuación, construimos la matriz nparse
+y la trasponemos:
+
+<<>>=
+datosExcelngCMatrix<-as(datosExcel,"nsparseMatrix")
+datosExcelngCMatrix
+trspDatosExcelngCMatrix<-t(datosExcelngCMatrix)
+trspDatosExcelngCMatrix
+@
+
+Obtenemos la transacciones a partir de la matriz anterior y un resumen de ellas:
+
+<<>>=
+transaccionesTxt<-as(trspDatosTxtngCMatrix,"transactions")
+summary(transaccionesTxt)
+@
+
+\subsubsection{Apriori desde el archivo Excel}
+@
+Por último, hallamos las asociaciones de la matriz cargada a través del algoritmo
+apriori con un soporte 0.5 y confianza 0.8:
+
+<<>>=
+asociacionesExcel<-apriori(transaccionesExcel, 
+parameter=list(support=0.5, confidence=0.8))
+inspect(asociacionesExcel)
+@
+
+\subsection{Lectura datos txt}
+@
+Para leer los datos del archivo txt, únicamente tenemos que usar la función read.table:
+
+
+<<>>=
+datostxt<-Matrix(as.matrix(read.table("ropa.txt")),byrow=TRUE, sparse=TRUE )
+datostxt
+@
+
+\subsection{Asociación desde el archivo txt}
+@
+Para realizar la asociación, tenemos que adaptar la matriz a la función
+que se va a utilizar en el siguiente paso. A continuación, construimos la matriz nparse
+y la trasponemos:
+
+<<>>=
+datosTxtngCMatrix<-as(datostxt,"nsparseMatrix")
+datosTxtngCMatrix
+trspDatosTxtngCMatrix<-t(datosTxtngCMatrix)
+trspDatosTxtngCMatrix
+@
+
+Ahora, obtenemos las transacciones a partir de la matriz anterior junto a su resumen:
+
+
+<<>>=
+transaccionesTxt<-as(trspDatosTxtngCMatrix,"transactions")
+summary(transaccionesTxt)
+@
+
+
+\subsubsection{Apriori desde el archivo txt}
+@
+Para terminar, obtenemos las asociaciones de la matriz con los datos de la ropa
+con soporte 0.4 y confianza 0.7:
+
+<<>>=
+asociacionesTxt<-apriori(transaccionesTxt, parameter=list(support=0.4, confidence=0.7))
+inspect(asociacionesTxt)
+@
+
+
+\subsubsection{Eclat}
+@
+El agoritmo Eclat es una alternativa a apriori, como hemos explicado anteriormente.
+Para poder usarlo y hallar las asociaciones, primero tenemos que usar la función eclat
+donde especificamos el soporte 0.5. Solo vamos a hacerlo del archivo txt, ya que los datos
+son los mismos que en el Excel:
+
+<<>>=
+itemsets <- eclat(transaccionesExcel,
+		parameter = list(supp = 0.5, maxlen = 5))
+@
+
+Ahora, usamos ruleInduction, donde indicamos la confianza 0.8 y podemos ver
+las transacciones:
+
+<<>>=
+rules <- ruleInduction(itemsets, transaccionesExcel, confidence = 0.8)
+inspect(rules)
+@
+
+
+\subsubsection{Representación gráfica de Apriori}
+@
+A continuación, vamos a visualizar los datos obtenidos anteriormente con apriori. Para ello
+utilizamos la librería arulesViz. Primero representamos un grafo dirigido donde podemos ver
+las asociaciones:
+
+
+<<Figura 5, fig=TRUE, echo=FALSE>>=
+plot(asociacionesTxt,method = "graph")
+@
+
+Ahora, visualizamos la gráfica de puntos dispersos, donde 
+cada punto representa una asociación:
+\newline
+<<Figura 6, fig=TRUE, echo=FALSE>>=
+plot(asociacionesTxt,method = "scatterplot")
+@
+
+\subsubsection{Representación gráfica de Eclat}
+@
+Volvemos a representar el grafo y la gráfica de puntos dispersos, pero ahora
+con los datos obtenidos del algoritmo Eclat:
+
+<<Figura 7, fig=TRUE, echo=FALSE>>=
+plot(rules,method = "graph")
+@
+
+<<Figura 8, fig=TRUE, echo=FALSE>>=
+plot(rules,method = "scatterplot")
+@
+
+\section{Análisis de asociación de compras en tecnología}
+En esta sección se llevará a cabo un análisis de asociación sobre cuales son los productos que se compran juntos en una tienda de tecnología.
+
+\subsection{Lectura de datos desde archivo Excel}
+Para comenzar creamos la matriz nsparse correspondiente y la transponemos, leyendo los datos desde de un archivo Excel:
+
+<<>>=
+datosExcelT<-Matrix(as.matrix(read.xlsx("tecnologia.xlsx", 1))
+,byrow=TRUE, sparse=TRUE )
+datosExcelngCMatrixT<-as(datosExcelT,"nsparseMatrix")
+trspDatosExcelngCMatrixT<-t(datosExcelngCMatrixT)
+trspDatosExcelngCMatrixT
+@
+
+\subsection{Algoritmo Apriori}
+A continuación, creamos las transacciones de la matriz en cuestión y aplicamos el algoritmo a priori y obtendremos las asociaciones que cumplen que su soporte, en este caso, sea mayor o igual a 0.3 y la confianza sea mayor o igual a 0.5.  Tambien se muestra un resumen de información acerca de las transacciones creadas.
+
+<<>>=
+transaccionesExcelT<-as(trspDatosExcelngCMatrixT,"transactions")
+summary(transaccionesExcelT)
+asociacionesExcelT<-apriori(transaccionesExcelT,
+parameter=list(support=0.3, confidence=0.5))
+inspect(asociacionesExcelT)
+@
+
+\subsection{Algoritmo Eclat}
+@
+Como ya se ha visto anteriormente, Eclat es una alternativa a apriori.
+Se especifica un soporte de 0.3, se van a leer los datos del archivo Excel:
+
+<<>>=
+itemsetsT <- eclat(transaccionesExcelT,parameter = list(supp = 0.3, maxlen = 5))
+itemsetsT
+@
+
+Finalmente se especifica una confianza del 0.5:
+<<>>=
+rulesT <- ruleInduction(itemsetsT, transaccionesExcelT, confidence = 0.5)
+inspect(rulesT)
+@
+\subsection{Representación gráfica de Apriori}
+@
+En las siguientes graficas se van a visualizar los datos que se han obtenido anteriormente mediante el algoritmo apriori. Para ello se va hacer uso de la librería arulesViz. En primer lugar se representa un grafo dirigido con las asociaciones:
+\newline
+<<Figura 9, fig=TRUE, echo=FALSE>>=
+plot(asociacionesExcelT,method = "graph")
+@
+\newline
+A continuación, se va a observar el gráfico disperso, donde cada punto indica una asociación:
+\newline
+<<Figura 10, fig=TRUE, echo=FALSE>>=
+plot(asociacionesExcelT,method = "scatterplot")
+@
+\newline
+\subsection{Representación gráfica de Eclat}
+Realizamos las mismas representaciones gráficas realizadas en Apriori para Eclat.
+Grafo:
+\newline
+<<Figura 11, fig=TRUE, echo=FALSE>>=
+plot(rulesT,method = "graph")
+@
+\newline
+Gráfico de puntos dispersos:
+\newline
+<<Figura 12, fig=TRUE, echo=FALSE>>=
+plot(rulesT,method = "scatterplot")
+@
+\newline
+
+
+\section{Análisis de asociación de compras en papeleria }
+@
+En esta sección se realizará un análisis de asociación sobre la compra de productos
+en una papelería.
+
+\subsection{Lectura de datos desde archivo Excel}
+Para comenzar creamos la matriz nsparse correspondiente y la trasponemos,
+leyendo los datos desde de un archivo Excel:
+
+<<>>=
+datosExcelP<-Matrix(as.matrix(read.xlsx("papeleria.xlsx", 1)),
+byrow=TRUE, sparse=TRUE )
+datosExcelngCMatrixP<-as(datosExcelP,"nsparseMatrix")
+trspDatosExcelngCMatrixP<-t(datosExcelngCMatrixP)
+trspDatosExcelngCMatrixP
+@
+
+\subsection{Algoritmo Apriori}
+A continuación, creamos las transacciones de la matriz en cuestión y aplicamos 
+el algoritmo a priori y obtendremos las asociaciones que cumplen que su soporte,
+en este caso, sea mayor o igual a 0.5 y la confianza sea mayor o igual a 0.8.
+Tambien se muestra un resumen de información acerca de las transacciones creadas.
+
+<<>>=
+transaccionesExcelP<-as(trspDatosExcelngCMatrixP,"transactions")
+summary(transaccionesExcelP)
+asociacionesExcelP<-apriori(transaccionesExcelP,
+parameter=list(support=0.5, confidence=0.8))
+inspect(asociacionesExcelP)
+@
+
+\subsection{Algoritmo Eclat}
+@
+
+Como ya se ha visto anteriormente, Eclat es una alternativa a apriori.
+Se especifica un soporte de 0.5, se van a leer los datos del archivo Excel:
+
+
+<<>>=
+itemsetsP <- eclat(transaccionesExcelP,
+parameter = list(supp = 0.5, maxlen = 5))
+itemsetsP
+@
+
+Finalmente se especifica una confianza del 0.5:
+<<>>=
+rulesP <- ruleInduction(itemsetsP, transaccionesExcelP, confidence = 0.8)
+inspect(rulesP)
+@
+\subsection{Representación gráfica de Apriori}
+@
+En las siguientes graficas se van a visualizar los datos que se han obtenido
+anteriormente mediante el algoritmo apriori.
+Para ello se va hacer uso de la librería arulesViz.
+En primer lugar se representa un grafo dirigido con las asociaciones:
+\newline
+<<Figura 13, fig=TRUE, echo=FALSE>>=
+plot(asociacionesExcelP,method = "graph")
+@
+\newline
+A continuación, se va a observar el gráfico disperso,
+donde cada punto indica una asociación:
+\newline
+<<Figura 14, fig=TRUE, echo=FALSE>>=
+plot(asociacionesExcelP,method = "scatterplot")
+@
+\newline
+\subsection{Representación gráfica de Eclat}
+Realizamos las mismas representaciones gráficas realizadas en Apriori para Eclat.
+Grafo:
+\newline
+<<Figura 15, fig=TRUE, echo=FALSE>>=
+plot(rulesP,method = "graph")
+@
+\newline
+Gráfico de puntos dispersos:
+\newline
+<<Figura 16, fig=TRUE, echo=FALSE>>=
+plot(rulesP,method = "scatterplot")
+@
+\newline
+@
+
+
+\section{Conclusiones}
+@
+
+En esta práctica hemos aprendido a usar en R los algoritmos de asociación. Para su
+realización, hemos utilizado el algoritmo visto en teoría (apriori) y hemos añadido
+el algoritmo eclat. Estos algoritmos nos permiten averiguar a partir de una muestra
+de datos, cuáles son los patrones de aparición conjunta más repetidos
+en dicha muestra y que obedecen a unos criterios de soporte y confianza mínimos.
+También, al final de cada sección hemos añadido unos gráficos donde se ven las
+asociaciones visualmente. Finalmente, tambien cabe mencionar que e  el desarrollo de
+esta práctica hemos podido observar como los algoritmos están en constante mejora.
+En particular en esta práctica, el algoritmo apriori (que salió el primero) se ha ido
+mejorando dando como resultado a mejores algoritmos como el eclat, entre otros.
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

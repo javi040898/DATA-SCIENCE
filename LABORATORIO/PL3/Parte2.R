@@ -1,0 +1,244 @@
+
+install.packages("rpart")
+install.packages("rpart.plot")
+install.packages("plotmo")
+
+library(rpart)
+library(rpart.plot)
+library(plotmo)
+
+#CLASIFICACION DE DATOS
+calificaciones<-read.table("datos.txt")
+muestra=data.frame(calificaciones)
+muestra
+
+clasificacion=rpart(CG~.,data=muestra,method="class",minsplit=1) #minsplit para forzarla
+clasificacion
+
+clasificacion2=rpart(CG~., data=muestra,method="class",minsplit=1,parms=list(split="information"))
+clasificacion2
+
+
+rpart.plot(clasificacion,type=5)#type=5 nombre de la variable en los nodos interiores
+
+rpart.plot(clasificacion2,type=5)
+
+rpart.rules(clasificacion)#Pone con palabras las reglas
+
+rpart.rules(clasificacion2)
+
+
+
+plot(clasificacion, uniform=TRUE, main="Arbol de clasificacion para las asignaturas")
+text(clasificacion, use.n=TRUE, all=TRUE, cex=.7, fancy=TRUE, fwidth=0.5, fheight=0.7)
+
+plot(clasificacion2, uniform=TRUE, main="Arbol de clasificacion para las asignaturas mediante entropía")
+text(clasificacion2, use.n=TRUE, all=TRUE, cex=.7, fancy=TRUE, fwidth=0.5, fheight=0.7)
+
+prp(clasificacion, extra = 7) # left graph
+
+prp(clasificacion2, extra = 7)
+
+plotmo(clasificacion, type = "prob", nresponse = "Ap") # middle graph
+
+plotmo(clasificacion, type = "prob", nresponse = "Ap",
+type2 = "image", ngrid2 = 200,
+pt.col = ifelse(kyphosis$Kyphosis == "Ap", "red", "lightblue"))
+
+
+plotmo(clasificacion, type = "prob", nresponse = "Ss") # middle graph
+
+plotmo(clasificacion, type = "prob", nresponse = "Ss",
+type2 = "image", ngrid2 = 200,
+pt.col = ifelse(kyphosis$Kyphosis == "Ss", "red", "lightblue"))
+
+#REGRESION
+
+muestra2=read.table("datos2.txt")
+muestra2
+
+regresion=lm(D~R,data=muestra2)
+regresion
+summary(regresion)
+
+
+plot(muestra2$R, muestra2$D, xlab='Radio', ylab='Densidad')
+
+abline(regresion,col="red")
+
+predict(regresion, muestra2) #Segunda variable
+
+
+covarianza<-function(x,y) {
+	media_x<-mean(x)
+	media_y<-mean(y)
+	len<- lenght(x)
+	res<-0
+	for(i in 1:len){
+		res<-res+x[i]*y[i]
+	}
+	res/len-media_x*media_y
+}
+
+dump("covarianza",file="covarianza.R");
+source("covarianza.R")
+
+
+install.packages("rpart")
+install.packages("rpart.plot")
+install.packages("plotmo")
+
+library(rpart)
+library(rpart.plot)
+library(plotmo)
+
+#CLASIFICACION DE DATOS
+calificaciones<-read.table("datos.txt")
+muestra=data.frame(calificaciones)
+muestra
+
+clasificacion=rpart(CG~.,data=muestra,method="class",minsplit=1) #minsplit para forzarla
+clasificacion
+
+rpart.plot(clasificacion,type=5)#type=5 nombre de la variable en los nodos interiores
+
+rpart.rules(clasificacion)#Pone con palabras las reglas
+
+plot(clasificacion, uniform=TRUE, main="Arbol de clasificacion para las asignaturas")
+text(clasificacion, use.n=TRUE, all=TRUE, cex=.7, fancy=TRUE, fwidth=0.5, fheight=0.7)
+
+prp(clasificacion, extra = 7) # left graph
+
+plotmo(clasificacion, type = "prob", nresponse = "Ap") # middle graph
+#type = "prob" is passed to predict()
+plotmo(clasificacion, type = "prob", nresponse = "Ap",
+type2 = "image", ngrid2 = 200,
+pt.col = ifelse(kyphosis$Kyphosis == "Ap", "red", "lightblue"))
+
+
+plotmo(clasificacion, type = "prob", nresponse = "Ss") # middle graph
+#type = "prob" is passed to predict()
+plotmo(clasificacion, type = "prob", nresponse = "Ss",
+type2 = "image", ngrid2 = 200,
+pt.col = ifelse(kyphosis$Kyphosis == "Ss", "red", "lightblue"))
+
+#REGRESION
+
+muestra2=read.table("datos2.txt")
+muestra2
+
+regresion=lm(D~R,data=muestra2)
+regresion
+summary(regresion)
+
+
+plot(muestra2$R, muestra2$D, xlab='Radio', ylab='Densidad')
+
+abline(regresion,col="red")
+
+predict(regresion, muestra2) #Segunda variable
+
+
+covarianza<-function(x,y) {
+	media_x<-mean(x)
+	media_y<-mean(y)
+	len<- length(x)
+	res<-0
+	for(i in 1:len){
+		res<-res+x[i]*y[i]
+	}
+	res/len-media_x*media_y
+}
+
+densidad=muestra2$D
+radio=muestra2$R
+
+covarianza(radio,densidad)
+
+sd_nuestra=function(x){sqrt((sd(x)^2)*(length(x)-1)/length(x))}
+
+
+
+correlacion<-function(x,y){covarianza(x,y)/(sd_nuestra(x)*sd_nuestra(y))}
+
+correlacion(densidad,radio)
+
+b_recta<-function(x,y){covarianza(x,y)/(sd_nuestra(x) * sd_nuestra(x))}
+
+
+a_recta<-function(x,y){
+	b<-b_recta(x,y)
+	mean(y)-mean(x)*b
+}
+recta<-function(x,y){
+	b<-b_recta(x,y)
+	a<-a_recta(x,y)
+	r<-correlacion(x,y)
+	paste("y =",as.character(a),"+",as.character(b),"* x",sep=" ")
+	
+}
+recta(radio,densidad)
+
+#ANOVA
+SSR<-function(x,y){
+	media_y<-mean(y)
+	a<-a_recta(x,y)
+	b<-b_recta(x,y)
+	len<- length(x)
+	res<-0
+	for(i in 1:len){
+		y_aux<-a+b*x[i]
+		res<-res+(y_aux-media_y)*(y_aux-media_y)
+	}
+	res
+}
+SSY<-function(x,y){
+	media_y<-mean(y)
+	len<-length(x)
+	res<-0
+	for(i in 1:len){
+		res<-res+(y[i]-media_y)*(y[i]-media_y)
+	}
+	res
+}
+
+
+correlacion_cuadrada<-function(x,y){SSR(x,y)/SSY(x,y)}
+
+correlacion_cuadrada(radio,densidad)
+
+
+sr<-function(x,y){
+	a<-a_recta(x,y)
+	b<-b_recta(x,y)
+	len<- length(x)
+	res<-0
+	for(i in 1:len){
+		y_aux<-a+b*x[i]
+		res<-res+(y_aux-y[i])*(y_aux-y[i])
+	}
+	sqrt(res/len)
+}
+
+sr(radio,densidad)
+
+Sweave("Memoria.Rnw")
+tools::texi2pdf("Memoria.tex")
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+

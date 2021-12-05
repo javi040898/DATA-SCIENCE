@@ -1,0 +1,266 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{PRÁCTICA 4 FUNDAMENTOS DE LA CIENCIA DE DATOS}
+\author{Javier Martín Gómez, Ignacio Afuera Díaz, Laura Gil Gómez, & Christian Ayala Urbanos}
+\usepackage{Sweave}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+En esta práctica se va a realizar el análisis de clasificación no supervisada de diversos datos utilizando el algoritmo K-means, que consiste en la partición de un conjunto de n observaciones en k grupos en el que cada observación pertenece al grupo cuyo valor medio es más cercano.
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Primera parte}
+@
+
+En esta primera parte se realizará, con ayuda del lenguaje R, el análisis de los datos de las calificaciones de 8 estudiantes.
+
+\subsection{Análisis de clasificación no supervisada}
+@
+
+Primero se van a guardar las calificaciones de dichos estudiantes en una matriz m de 8 columnas y 2 filas:
+
+<<>>=
+m<-matrix(c(4,4, 3,5, 1,2, 5,5, 0,1, 2,2, 4,5, 2,1),2,8)
+m
+@
+
+A continuación se hace la traspuesta de m, mediante paréntesis englobamos la sentencia para mostrar la matriz modificada directamente.
+Finalmente nos quedan 2 columnas y 8 filas:
+
+<<>>=
+(m<-t(m))
+@
+
+Ahora se obtendrán los centroides, cuyo número más adecuado es 2. Se establecerán dos puntos a partir de los cuales se realizará el algorimto:
+
+<<>>=
+(cen<-t(matrix(c(0,1, 2,2),2,2)))
+@
+
+Una vez tenemos los centroides, ejecutamos el algoritmo utilizando la función kmeans que proporciona R. Como kmeans pertenece a stats, que es una librería estándar, no es necesaria su descarga. Para ello, se le pasan como parámetros la matriz de datos m, los centroiden obtendidos y el número máximo de iteraciones permitidas (en este caso serán 4 iteraciones). Guardamos el resultado en clasificacionns:
+
+<<>>=
+(clasificacionns<-kmeans(m,cen,4))
+@
+
+A continuación, combinamos los datos obtenidos viendo además la clase a la que pertenecen. Para ello utilizamos la función cbind:
+
+<<>>=
+(m=cbind(clasificacionns$cluster,m))
+@
+
+Con la función subset mostramos cada uno de los datos combinados en varias subgráficas, una por cada centroide obtenido.
+
+<<>>=
+mc1=subset(m,m[,1]==1)
+mc1
+mc2=subset(m,m[,1]==2)
+mc2
+@
+
+\section{Segunda parte}
+
+En esta segunda parte se va a hacer un ejercicio que consistirá en analizar una imagen de tipo PNG titulada 'eagle'. Dicha clasificación se realizará mediante dos algoritmos: kmeans y CLARA. Para poder leer la imagen y construir gráficos primero habrá que instalar las siguientes librerías:
+
+<<>>= 
+install.packages("ggplot2")
+install.packages("png")
+library(ggplot2) 
+library(png)
+@
+
+Una vez tenemos las librerías necesarias instaladas, procedemos a leer la imagen mediante la función readPNG() y obtenemos las dimensiones de la imagen leída mediante la función dim():
+
+<<>>= 
+img <- readPNG("eagle.png")
+dims <- dim(img)
+@
+
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=200px,keepaspectratio]{./eagle.png}
+  \caption{Imagen original}
+  \label{fig:original}
+\end{figure}
+
+Una vez tenemos los datos de la imagen, obtenemos sus colores RGB y los guardamos en un dataframe. Además, damos valores a los ejes 'x' e 'y' a partir de las medidas de la imagen para representarlos de forma gráfica.
+
+<<>>= 
+coloresRGB <- data.frame(
+  x = rep(1:dims[2], each = dims[1]),
+  y = rep(dims[1]:1, dims[2]),
+  #as.vector:convierte matriz distribuida a vector no distribuido
+  R = as.vector(img[,,1]), 
+  G = as.vector(img[,,2]),
+  B = as.vector(img[,,3])
+  )
+@
+
+Por último, asignamos un cierto número de clústers para realizar la clasificación no supervisada, que en nuestro caso serán 2 (aunque puede ser cualquier número):
+
+<<>>= 
+numClust <- 2
+@
+
+
+\subsection{Algoritmo Kmeans}
+@
+
+Llamamos a la función kmeans() para realizar la clasificación según los colores obtenidos de la imagen. A continuación, creamos colores con rgb() a partir de los centroides obtenidos anteriormente:
+
+<<>>= 
+clasifKmeans <- kmeans(coloresRGB[, c("R", "G", "B")], centers = numClust)
+numColors <- rgb(clasifKmeans$centers[clasifKmeans$cluster,])
+@
+
+Una vez obtenidos los colores, los asignaremos a la gráfica que se creará con ggplot():
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=200px,keepaspectratio]{./eagle2clusters.png}
+  \caption{Imagen con 2 clusters}
+  \label{fig:original}
+\end{figure}
+
+
+Si aumentamos el número de clústers y volvemos a realizar el algoritmo, la imagen toma más colores:
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=200px,keepaspectratio]{./eagle6clusters.png}
+  \caption{Imagen con 6 clusters}
+  \label{fig:original}
+\end{figure}
+
+Cuantos más clústers se apliquen al algoritmo, más nitidez tendrá la imagen generada:
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=200px,keepaspectratio]{./eagle13clusters.png}
+  \caption{Imagen con 13 clusters}
+  \label{fig:original}
+\end{figure}
+
+\newpage
+
+\subsection{Algoritmo CLARA}
+
+Para realizar el algoritmo CLARA, necesitamos instalar previamente las liberías cluster y factoextra:
+
+<<>>=
+install.packages(c("cluster", "factoextra"))
+library(cluster)
+library(factoextra)
+@
+
+A continuación, llamamos a la función clara() para realizar la clasificación a partir de los colores del mismo dataframe utilizado para kmeans, que siga una métrica euclidean (también se pueden hacer cálculos con la métrica manhattan) y para un número de 10 muestras:
+
+<<>>=
+clasifClara <- clara(coloresRGB, numClust, metric = "euclidean", stand = FALSE, samples = 10, pamLike = FALSE)
+clasifClara
+@
+
+
+\newpage
+
+Para visualizar los resultados obtenidos hacemos uso de la función fviz_cluster.
+
+A la función, le asignaremos: los datos obtenidos de la clasificación con CLARA,
+el tipo de elipse t, que asume una distribución de tipo t multivariable, el tipo de texto utilizado para representar los datos en la gráfica, 
+que en nuestro caso será point de tal forma que solo se muestran los puntos en la gráfica sin etiquetas y la especificación del tamaño de los puntos representativos de los datos,
+en el que se ha elegido un tamaño de 2.5 unidades.
+
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=250px,keepaspectratio]{./graficoClara.png}
+  \caption{Imagen CLARA}
+  \label{fig:original}
+\end{figure}
+
+
+
+\section{Tercera parte}
+@
+
+En esta última parte vamos a analizar y utilizar el paquete LearnClust, que contiene funciones que permiten hacer cálculos mediante algoritos de clustering jerárquico. Para ello, necesitamos instalar la librería LearnClust:
+
+<<>>=
+install.packages("LearnClust")
+library(LearnClust)
+@
+
+Para probar algunas funciones ofrecidas por esta libería, hacemos uso del enunciado del ejercicio realizado en la primera parte de esta práctica. Para el análisis de otras funciones se utilizarán otros ejemplos.
+
+\subsection{AgglomerativeHC}
+
+Esta función ejecuta el algoritmo de clustering jerárquico aglomerativo completo tomando como parámetros el tipo de distancia y aproximamiento en forma de string.
+
+<<>>=
+m<-matrix(c(4,4, 3,5, 1,2, 5,5, 0,1, 2,2, 4,5, 2,1),2,8)
+agglomerativeHC(m,'EUC','MAX')
+@
+
+<<Figura 6: gráfica clustering aglomerativo, fig=TRUE, echo=True>>=
+
+agglomerativeHC(m,'EUC','MAX')
+@
+
+\subsection{AgglomerativeHC.details}
+
+Explica los pasos realizados en el algoritmo aglomerativo explicado en el apartado anterior sobre un conjunto de datos a resolver.
+
+<<>>=
+agglomerativeHC.details(m,'EUC','MAX')
+@
+
+\subsection{toList}
+
+Convierte un conjunto de datos numérico en una lista. Dicho conjunto de datos puede ser una matriz, un vector o un dataframe.
+
+<<>>=
+lst<-toList(m)
+m
+@
+
+\subsection{octileDistance}
+
+Calcula la distancia octil entre dos clústers.
+
+<<>>=
+x <- c(1,2)
+y <- c(1,3)
+octileDistance(x,y)
+@
+
+\subsection{canberradistance}
+
+Calcula la distancia de Canberra entre dos clústers.
+
+<<>>=
+canberradistance(x,y)
+@
+
+\section{Conclusiones}
+
+El lenguaje R nos permite aplicar de forma sencilla y eficaz los algoritmos de clasificación no supervisada, además de que nos facilita representar de forma gráfica los resultados obtenidos de la aplicación de dichos algoritmos. En nuestro caso se han aplicado Kmeans y CLARA, en donde hemos podido comprobar que, aunque ambos algoritmos son de agrupamiento por particiones, CLARA es más apropiado para conjuntos muy grandes de datos mientras que Kmeans puede abarcar más tamaños. Por último, hemos probado el paquete LearnClust, que permite realizar cálculos a través de los algoritmos de agrupamiento jerárquico.
+
+@
+
+
+
+
+
+
+
+
+
+\end{document}

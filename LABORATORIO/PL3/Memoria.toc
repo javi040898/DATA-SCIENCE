@@ -1,0 +1,8 @@
+\contentsline {section}{\numberline {1}Primera parte}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Análisis de clasificación de datos cualitativos}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Análisis de clasificación de datos cuantitativos}{4}{}%
+\contentsline {section}{\numberline {2}Segunda parte}{5}{}%
+\contentsline {subsection}{\numberline {2.1}Mejoras en la clasificación de datos cualitativos}{5}{}%
+\contentsline {subsection}{\numberline {2.2}Mejoras en la clasificación de datos cuantitativos}{17}{}%
+\contentsline {subsubsection}{\numberline {2.2.1}Creación de funciones para el análisis de regresión}{17}{}%
+\contentsline {section}{\numberline {3}Conclusiones}{20}{}%

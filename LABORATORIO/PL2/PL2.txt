@@ -1,0 +1,15 @@
+
+muestra<-Matrix(c(1,1,0,1,1, 1,1,1,1,0, 1,1,0,1,0, 1,0,1,1,0, 1,1,0,0,0, 0,0,0,1,0),6,5,byrow=TRUE,dimnames=list(c("Suceso1","Suceso2","Suceso3","Suceso4","Suceso5","Suceso6"),c("Pan","Agua","Cafe","Leche","Naranjas")),sparse=TRUE)
+(filas,columnas)
+library(arules)
+muestrangCMatrix<-as(muestra,"nsparseMatrix")
+transpmuestratrangCMatrix<-t(muestrangCMatrix)
+transacciones<-as(transpmuestratrangCMatrix,"transactions")
+summary(transacciones)
+asociaciones<-apriori(transacciones,parameter=list(support=0.5,confidence=0.8))
+inspect(asociaciones)
+LIP**
+
+
+
+

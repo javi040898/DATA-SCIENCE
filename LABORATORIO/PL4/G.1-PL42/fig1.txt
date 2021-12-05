@@ -1,0 +1,5 @@
+<<Figura 1: eagle.png, fig=TRUE, echo=True>>=
+img <- readPNG("eagle.png")
+dims <- dim(img)
+dims
+@

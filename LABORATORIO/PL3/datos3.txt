@@ -1,0 +1,11 @@
+	R	T	P	V
+1	B	C	B	Me
+2	C	B	A	Bu
+3	D	D	D	Ma
+4	C	D	B	Ma
+5	B	B	C	Bu
+6	A	D	C	Ma
+7	B	A	C	Bu
+8	B	A	B	Bu
+9	C	C	A	Me
+10	B	A	A	Bu

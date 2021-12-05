@@ -1,0 +1,43 @@
+\contentsline {section}{\numberline {1}Análisis radio satélites Urano}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Primer análisis: frecuencias}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.1}Frecuencia absoluta}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.2}Frecuencia relativa}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.3}Frecuencia absoluta acumulada}{4}{}%
+\contentsline {subsubsection}{\numberline {1.1.4}Frecuencia relativa acumulada}{4}{}%
+\contentsline {subsection}{\numberline {1.2}Segundo análisis datos: media artimética y moda}{4}{}%
+\contentsline {subsubsection}{\numberline {1.2.1}Media aritmética}{4}{}%
+\contentsline {subsubsection}{\numberline {1.2.2}Moda}{4}{}%
+\contentsline {subsection}{\numberline {1.3}Tercer análisis de datos: medidas de dispersión}{5}{}%
+\contentsline {subsubsection}{\numberline {1.3.1}Desviación estándar}{5}{}%
+\contentsline {subsubsection}{\numberline {1.3.2}Varianza}{5}{}%
+\contentsline {subsection}{\numberline {1.4}Cuarto análisis de datos: medidas de ordenación}{5}{}%
+\contentsline {subsubsection}{\numberline {1.4.1}Mediana}{5}{}%
+\contentsline {subsubsection}{\numberline {1.4.2}Cuantiles}{6}{}%
+\contentsline {subsubsection}{\numberline {1.4.3}Rango intercuartílico}{7}{}%
+\contentsline {subsubsection}{\numberline {1.4.4}Rango interdecil}{7}{}%
+\contentsline {subsection}{\numberline {1.5}Datos agrupados}{8}{}%
+\contentsline {subsubsection}{\numberline {1.5.1}Frecuencias de datos agrupados}{8}{}%
+\contentsline {subsection}{\numberline {1.6}Visualización}{9}{}%
+\contentsline {subsection}{\numberline {1.7}Otros cálculos}{9}{}%
+\contentsline {subsubsection}{\numberline {1.7.1}Rango}{10}{}%
+\contentsline {subsubsection}{\numberline {1.7.2}Ordenación}{10}{}%
+\contentsline {subsubsection}{\numberline {1.7.3}Lectura datos de Excel}{11}{}%
+\contentsline {section}{\numberline {2}Análisis mpg de cardata}{11}{}%
+\contentsline {subsection}{\numberline {2.1}Segundo análisis datos: media aritmética y moda }{12}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}Media aritmética}{12}{}%
+\contentsline {subsubsection}{\numberline {2.1.2}Moda}{12}{}%
+\contentsline {subsection}{\numberline {2.2}Tercer análisis de datos: medidas de dispersión}{13}{}%
+\contentsline {subsubsection}{\numberline {2.2.1}Desviación estándar}{13}{}%
+\contentsline {subsubsection}{\numberline {2.2.2}Varianza}{13}{}%
+\contentsline {subsection}{\numberline {2.3}Cuarto análisis de datos: medidas de ordenación}{14}{}%
+\contentsline {subsubsection}{\numberline {2.3.1}Mediana}{14}{}%
+\contentsline {subsubsection}{\numberline {2.3.2}Cuantiles}{14}{}%
+\contentsline {subsubsection}{\numberline {2.3.3}Rango intercuartílico}{15}{}%
+\contentsline {subsubsection}{\numberline {2.3.4}Rango interdecil}{16}{}%
+\contentsline {subsection}{\numberline {2.4}Datos agrupados}{16}{}%
+\contentsline {subsection}{\numberline {2.5}Visualización}{17}{}%
+\contentsline {subsection}{\numberline {2.6}Otros cálculos}{18}{}%
+\contentsline {subsubsection}{\numberline {2.6.1}Rango}{18}{}%
+\contentsline {subsubsection}{\numberline {2.6.2}Ordenación}{18}{}%
+\contentsline {subsubsection}{\numberline {2.6.3}Lectura datos de Excel}{19}{}%
+\contentsline {section}{\numberline {3}Conclusión}{19}{}%

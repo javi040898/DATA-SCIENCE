@@ -1,0 +1,396 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{PRÁCTICA 3 FUNDAMENTOS DE LA CIENCIA DE DATOS}
+\author{Javier Martín Gómez, Ignacio Afuera Díaz, Laura Gil Gómez, & Christian Ayala Urbanos}
+\usepackage{Sweave}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+En esta práctica hemos realizado un análisis de clasificación de datos con R. Para los datos cualitativos,
+hemos utilizado el algoritmo de Hunt, y hemos resuelto el mismo problema visto en teoría. Hemos obtenido
+la ganancia de información a través de la medida de impureza Gini. Además, hemos realizado otro análisis 
+para variables cuantitativas, el análisis de regresión lineal. Hemos realizado el análisis de regresión 
+para el radio y la densidad de los planetas interiores. Posteriormente, hemos añadido modificaciones a ambos
+ejercicios.
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Primera parte}
+@
+
+En esta primera parte se realizará, con ayuda del lenguaje R, los ejercicios que hemos visto en teoría.
+
+\subsection{Análisis de clasificación de datos cualitativos}
+@
+
+Se va a realizar el ejercicio de clasificación de datos cualitativos sobre el fichero datos.txt, que está formado
+por cuatro calificaciones de 9 estudiantes. Dichas calificaciones se subdividen a su vez en dos grupos: por una
+parte se tienen tres calificaciones iniciales de teoría (T), laboratorio (L), prácticas (P), que pueden ser A,B,C
+o D, y otra calificación llamada calificación global (CG) que puede ser Ap o Ss. Para ello, se van a clasificar en 
+aprobados o suspensos utilizando árboles de decisión de HuntPara empezar tendremos que
+instalar y cargar la librería rpart, que es el paquete que permite la implementación de los árboles de
+clasificación a utilizar:
+
+<<>>=
+install.packages("rpart")
+library(rpart)
+@
+
+A continuación, leemos los datos del fichero datos.txt y los insertamos en un dataframe:
+
+<<>>=
+calificaciones<-read.table("datos.txt")
+muestra=data.frame(calificaciones)
+muestra
+@
+
+Tras insertar los datos en el dataframe, los clasificamos utilizando rpart, donde CG es el suceso
+clasificador (el punto de después de CG~ indica que para la función de clasificación se van a usar todos
+las variables restantes de la muestra). Primero analizaremos el árbol de decisión con el algoritmo Gini:
+
+
+<<>>=
+clasificacion=rpart(CG~.,data=muestra,method="class",minsplit=1)
+@
+
+
+Otra forma de realizar lo anterior es como sigue (aquí indicamos los elementos en vez de escribir un punto):
+
+<<>>=
+clasificacion=rpart(CG~T+L+P, data=muestra, method="class", minsplit=1)
+@
+
+Vemos la estructura del árbol y observamos que realiza la clasificación:
+
+<<>>=
+clasificacion
+@
+
+Ahora se analizará el árbol mediante entropía:
+
+<<>>=
+clasificacion2=rpart(CG~., data=muestra,method="class",
+minsplit=1,parms=list(split="information"))
+@
+
+De nuevo, visualizamos la estructura del árbol mediante el nuevo algoritmo:
+
+<<>>=
+clasificacion2
+@
+
+\subsection{Análisis de clasificación de datos cuantitativos}
+@
+
+Vamos a realizar un análisis de regresión para el fichero datos2.txt, que muestra los radios ecuatoriales
+(R) y densidades (D) de los planetas interiores del sistema solar (ya que a diferencia del apartado anterior
+estos datos son numéricos, y por tanto, cuantitativos). Para ello, leemos los datos del archivo correspondiente:
+
+<<>>=
+muestra2=read.table("datos2.txt")
+muestra2
+@
+
+Para realizar el análisis de regresión utilizamos lm, ya que es la función de R que ajusta modelos lineales,
+y en ella especificamos la relación deseada. En nuestro caso será D y R:
+
+<<>>=
+regresion=lm(D~R,data=muestra2)
+regresion
+@
+
+También, podemos ver un resumen del análisis de regresión en el que se muestran datos interesantes sobre la recta,
+como los residuos, los coeficientes, el error residual estándar y la correlación cuadrada. Para ello hacemos uso
+de la función summary: 
+
+<<>>=
+summary(regresion)
+@
+
+
+\section{Segunda parte}
+
+En esta sección detallaremos las mejoras que hemos realizado sobre los ejercicios de la sección anterior.
+
+\subsection{Mejoras en la clasificación de datos cualitativos}
+Para esta sección ha sido necesario recurrir, a parte de rpart, a los paquetes y librerias plotmo y rpart.plot para
+poder visualizar los árboles de decisión de forma más clara. Para ello se realiza su correspondiente instalación:
+
+<<>>= 
+install.packages("rpart")
+install.packages("rpart.plot")
+install.packages("plotmo")
+
+library(rpart)
+library(rpart.plot)
+library(plotmo)
+@
+
+La primera mejora para este ejercicio consiste en poder visualizar de forma gráfica el árbol de decisión.
+Para ello se utiliza la siguiente instrucción, donde type=5 sirve para poder ver en cada nodo el nombre
+de su correspondiente variable.
+
+<<Figura 1, fig=TRUE, echo=True>>=
+rpart.plot(clasificacion,type=5)
+@
+
+\newpage
+Hacemos lo mismo con el árbol de decisión analizado con entropía:
+
+<<Figura 2, fig=TRUE, echo=True>>=
+rpart.plot(clasificacion2,type=5)
+@
+
+\newpage
+Otro tipo de árbol que podemos visualizar es el que se muestra a continuación, este nos muestra, a parte
+de las decisiones tomadas en cada rama, la cantidad de datos de cada tipo (en nuestro caso Ap y Ss)
+que cada nodo posee.
+
+<<Figura 3, fig=TRUE, echo=True>>=
+
+plot(clasificacion, uniform=TRUE, 
+main="Arbol de clasificacion para las asignaturas")
+text(clasificacion, use.n=TRUE, all=TRUE, 
+cex=.7, fancy=TRUE, fwidth=0.5, fheight=0.7)
+@
+
+\newpage
+Lo mismo para entropía:
+
+<<Figura 4, fig=TRUE, echo=True>>=
+plot(clasificacion2, uniform=TRUE, 
+main="Arbol de clasificacion para las asignaturas mediante entropía")
+text(clasificacion2, use.n=TRUE, all=TRUE, 
+cex=.7, fancy=TRUE, fwidth=0.5, fheight=0.7)
+@
+
+La segunda mejora consiste en mostrar en texto las reglas de clasificación obtenidas para poder entenderlas
+más facilmente. Para ello utiliza la instrucción rules:
+
+<<>>=
+rpart.rules(clasificacion)
+@
+
+\newpage
+Realizamos lo mismo con la entropía
+<<>>=
+rpart.rules(clasificacion2)
+@
+
+\newpage
+Para mostrar las reglas en formato gráfico se hace uso de prp, que muestra un modelo de tipo rpart:
+
+<<Figura 5, fig=TRUE, echo=True>>=
+prp(clasificacion, extra = 7)
+@
+
+\newpage
+<<Figura 6, fig=TRUE, echo=True>>=
+prp(clasificacion2, extra = 7)
+@
+
+Como última modificación a este apartado, se presentan unos gráficos en relación a las variables L y P
+para el resultado final CG=Ap (tres primeros gráficos) y para el resultado final CG=Ss (tres últimos).
+
+<<Figura 7, fig=TRUE, echo=True>>=
+plotmo(clasificacion, type = "prob", nresponse = "Ap")
+
+plotmo(clasificacion, type = "prob", nresponse = "Ap",
+type2 = "image", ngrid2 = 200,
+pt.col = ifelse(kyphosis$Kyphosis == "Ap", "red", "lightblue"))
+
+@
+
+
+<<Figura 8, fig=TRUE, echo=True>>=
+plotmo(clasificacion, type = "prob", nresponse = "Ss") # middle graph
+plotmo(clasificacion, type = "prob", nresponse = "Ss",
+type2 = "image", ngrid2 = 200,
+pt.col = ifelse(kyphosis$Kyphosis == "Ss", "red", "lightblue"))
+@
+
+Visualizamos los mismos gráficos para la entropía
+
+<<Figura 9, fig=TRUE, echo=True>>=
+plotmo(clasificacion2, type = "prob", nresponse = "Ap") # middle graph
+
+plotmo(clasificacion2, type = "prob", nresponse = "Ap",
+type2 = "image", ngrid2 = 200,
+pt.col = ifelse(kyphosis$Kyphosis == "Ap", "red", "lightblue"))
+@
+
+<<Figura 10, fig=TRUE, echo=True>>=
+plotmo(clasificacion2, type = "prob", nresponse = "Ss") # middle graph
+
+plotmo(clasificacion2, type = "prob", nresponse = "Ss",
+type2 = "image", ngrid2 = 200,
+pt.col = ifelse(kyphosis$Kyphosis == "Ss", "red", "lightblue"))
+@
+
+
+\newpage
+\subsection{Mejoras en la clasificación de datos cuantitativos}
+Aquí representaremos la recta que hemos obtenido en el proceso de la regresión, además de las muestras:
+
+<<Figura 11, fig=TRUE, echo=True>>=
+plot(muestra2$R, muestra2$D, xlab='Radio', ylab='Densidad')
+abline(regresion,col="red")
+predict(regresion, muestra2) #Segunda variable
+@
+
+\subsubsection{Creación de funciones para el análisis de regresión}
+
+En esta subsección vamos a crear las funciones vistas en teoría para el análisis de regresión.
+
+En primer lugar se ha creado una función que calcula la covarianza siguiendo exactamente el mismo procedimiento
+que hemos visto en teoría
+
+<<>>=
+covarianza<-function(x,y) {
+	media_x<-mean(x)
+	media_y<-mean(y)
+	len<- length(x)
+	res<-0
+	for(i in 1:len){
+		res<-res+x[i]*y[i]
+	}
+	res/len-media_x*media_y
+}
+
+covarianza(radio,densidad)
+@
+
+Ahora, usaremos la covarianza para el cálculo de la función de regresión y la correlación, que nos indicará
+cuánta dependencia habrá entre las variables (cuanto más cerca de 1 -,1 mejor y más cerca de 0, peor).
+Para ello, primero tendremos que crear la fórmula de la desviación típica (creada en la práctica 1):
+
+<<>>=
+sd_nuestra=function(x){sqrt((sd(x)^2)*(length(x)-1)/length(x))}
+@
+
+Con la covarianza y las desviaciones típicas de las dos variables. Obtenemos la correlación:
+
+
+<<>>=
+correlacion<-function(x,y){covarianza(x,y)/(sd_nuestra(x)*sd_nuestra(y))}
+correlacion(densidad,radio)
+@
+
+Para calcular la función de regresión (y=a+bx), tendremos que hallar primero los valores de a y b, los cuales
+se obtendrán a partir de las funciones creadas anteriormente:
+
+<<>>=
+b_recta<-function(x,y){covarianza(x,y)/(sd_nuestra(x) * sd_nuestra(x))}
+
+
+a_recta<-function(x,y){
+	b<-b_recta(x,y)
+	mean(y)-mean(x)*b
+}
+@
+
+Ahora, a partir de los valores a y b calculados anteriormente, se construye la recta con la siguiente función:
+
+<<>>=
+recta<-function(x,y){
+	b<-b_recta(x,y)
+	a<-a_recta(x,y)
+	r<-correlacion(x,y)
+	paste("y =",as.character(a),"+",as.character(b),"* x",sep=" ")
+	
+}
+recta(radio,densidad)
+@
+
+
+Tambien se ha implementado el análisis ANOVA para las rectas de regresión. Para ello se han creado las siguientes funciones:
+
+-SSR: calcula según el procedimiento visto en teoría el dato con el mismo nombre (el sumatorio cada valor de y calculado menos la media 
+al cuadrado, es decir, se calcula cuanto se alejan los valores calculados de y de la media):
+
+<<>>=
+SSR<-function(x,y){
+	media_y<-mean(y)
+	a<-a_recta(x,y)
+	b<-b_recta(x,y)
+	len<- length(x)
+	res<-0
+	for(i in 1:len){
+		y_aux<-a+b*x[i]
+		res<-res+(y_aux-media_y)*(y_aux-media_y)
+	}
+	res
+}
+@
+
+-SSY: calcula el sumatorio de cada valor de y observado menos la media al cuadrado, en otras palabras, calculamos cuanto se alejan los valores
+observados de y de la media:
+
+<<>>=
+SSY<-function(x,y){
+	media_y<-mean(y)
+	len<-length(x)
+	res<-0
+	for(i in 1:len){
+		res<-res+(y[i]-media_y)*(y[i]-media_y)
+	}
+	res
+}
+@
+
+-Correlación cuadrada: haciendo el cociente de los dos valores anteriores (SSR/SSY) obtendremos un dato cuyo valor
+esta comprendido entre 0 y 1, contra más cerca de 1 este mejor ajustada estará la recta.
+
+<<>>=
+correlacion_cuadrada<-function(x,y){SSR(x,y)/SSY(x,y)}
+correlacion_cuadrada(radio,densidad)
+@
+
+Tambien se ha implementado el error estándar de la estimación, que es la diferencia entre los valores de y
+a través de la función de regresión. Cuanto más próximo a 0 sea, nos indicará un buen ajuste de la recta :
+
+<<>>=
+sr<-function(x,y){
+	a<-a_recta(x,y)
+	b<-b_recta(x,y)
+	len<- length(x)
+	res<-0
+	for(i in 1:len){
+		y_aux<-a+b*x[i]
+		res<-res+(y_aux-y[i])*(y_aux-y[i])
+	}
+	sqrt(res/len)
+}
+
+sr(radio,densidad)
+@
+
+\section{Conclusiones}
+@
+En esta práctica hemos aprendido a como realizar la clasificación supervisada con ayuda del lenguaje de programación R.
+En concreto a como realizar el algoritmo de Hunt y a realizar un análisis de regresión. Tambien hemos aprendido a poder
+representar los datos que se obtienen de dichos análisis para poderlos visualizar de una forma más sencilla. Por último,
+nosotros también hemos creado parte de dichos análisis como puede ser el ANOVA u otras medidas del ajuste de la recta de
+regresión.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

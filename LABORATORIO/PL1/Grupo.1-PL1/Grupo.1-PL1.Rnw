@@ -1,0 +1,625 @@
+\documentclass [a4paper] {article}
+\usepackage[utf8]{inputenc}
+\title{PRÁCTICA 1 FUNDAMENTOS DE LA CIENCIA DE DATOS}
+\author{Javier Martín Gómez, Ignacio Afuera Díaz, Laura Gil Gómez, & Christian Ayala Urbanos}
+\usepackage{Sweave}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+En esta práctica hemos realizado dos análisis estadísticos en el lenguaje R. En el primero de ellos hemos analizado los
+datos de los radios de los satélites de Urano. En el segundo se hemos analizado los datos de mpg (millas por galón) de varios
+coches extraidos de su respectivos archivos (satelites.txt y cardata.sav).
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Análisis radio satélites Urano}
+
+Primero de todo, con el lenguaje R, leemos el fichero satelites.txt para extraer los datos del mismo. 
+
+<<>>=
+s<-read.table("satelites.txt")
+@
+
+Como nuestro propósito es analizar los datos la columna radio, la guardamos en una variable que denominamos radio.
+Para facilitar su acceso más adelante.
+
+<<>>=
+radio=s$Radio
+radio
+@
+
+
+\subsection{Primer análisis: frecuencias}
+@
+La frecuencia es el número de veces que aparece un dato. Distinguimos dos tipos: absoluta y relativa.
+Para cada una de ellas tambien se puede realizar una suma acumulativa (frecuencia absoluta o relativa acumulada).
+\subsubsection{Frecuencia absoluta}
+@
+La frecuencia absoluta indica el número de veces que se repite un dato. Para el radio, la calculamos de la siguiente manera:
+
+<<>>=
+frecabsradio<-table(radio)
+frecabsradio
+@
+
+\subsubsection{Frecuencia relativa}
+@
+La frecuencia relativa es la frecuencia absoluta para cada dato dividida entre el número de datos totales.
+R no tiene una función para calcular la frecuencia relativa, por lo que la creamos nosotros de la siguiente manera:
+
+<<>>=
+frecrel<-function(x){table(x)/length(x)}
+@
+
+Como se puede comprobar, dividimos la frecuencia absoluta del valor introducido y la dividimos entre el número de datos.
+La aplicamos para los datos de los radio:
+
+<<>>=
+frecrelradio<-frecrel(radio)
+frecrelradio
+@
+
+\subsubsection{Frecuencia absoluta acumulada}
+@
+Para poder visualizar de una forma sencilla la situación de los datos calculamos para cada dato la frecuencia absoluta
+acumulada, que como se citó anteriormente, es la suma acumulativa de las frecuencias absolutas.
+
+<<>>=
+frecabsacumradio<-cumsum(frecabsradio)
+frecabsacumradio
+@
+
+\subsubsection{Frecuencia relativa acumulada}
+@
+Por los mismos motivos, se calcula la frecuencia relativa acumulada. En este caso el último dato debe de poseer frecuencia
+acumulada 1, ya que aquí se tratan proporciones.
+
+<<>>=
+frecrelacumradio<-cumsum(frecrelradio)
+frecrelacumradio
+@
+
+\subsection{Segundo análisis datos: media artimética y moda}
+@
+El segundo que se realiza a los datos consiste en calcular su media aritmética y moda
+\subsubsection{Media aritmética}
+@
+La media aritmética ha sido calculada a partir de la siguiente instrucción:
+<<>>=
+mr<-mean(radio)
+mr
+@
+\subsubsection{Moda}
+@
+Posteriormente se ha calculado la moda de la siguiente manera, dicho 
+cálculo representa el dato que más veces aparece:
+<<>>=
+modar<-mfv(radio)
+modar
+@
+
+Aunque previamente hemos tenido que instalar el paquete y la librería correspondientes:
+
+<<>>=
+install.packages("modeest")
+library(modeest)
+@
+
+
+\subsection{Tercer análisis de datos: medidas de dispersión}
+@
+El tercer análisis que se realiza sobre los datos son las medidas de dispersión, las cuales indican si los datos 
+estan agrupados o no. Se calcularán: desviación estándar y varianza.
+\subsubsection{Desviación estándar}
+@
+Esta medida es usada para medir la variación o la dispersión de un conjunto de datos numéricos. 
+En este caso la función para calcularla proporcionada por R no proporciona el resultado que nos interesa, 
+por lo que hemos creado una función para que el se calcule por el mismo procedimiento visto en teoria.
+<<>>=
+sd_nuestra=function(x){sqrt((sd(x)^2)*(length(x)-1)/length(x))}
+@
+Se obtiene, por lo tanto, de la siguiente manera:
+<<>>=
+sdn<-sd_nuestra(radio)
+sdn
+@
+\subsubsection{Varianza}
+@
+Esta medida de dispersión es la desviación típica elevada al cuadrado. Debido a las mismas razones que en el apartado anterior, nos creamos una función para poder calcularla de la forma adecuada.
+
+<<>>=
+var_nuestra=function(x){sd_nuestra(x)^2}
+@
+
+Se calcula aplicando la función, quedando de la siguiente manera:
+<<>>=
+varn<-var_nuestra(radio)
+varn
+@
+
+
+\subsection{Cuarto análisis de datos: medidas de ordenación}
+@
+El cuarto análisis de datos se realiza sobre las medidas de ordenación: mediana y  cuantiles. También, hemos hallado
+el rango intercuartílico y el rango interdecil.
+
+\subsubsection{Mediana}
+@
+La mediana es el elemento de una serie ordenada de valores crecientes de forma que la divide en dos partes iguales,
+superiores e inferiores a él. Para calcular la mediana de los radios realizamos lo siguiente:
+
+<<>>=
+medianr<-median(radio)
+medianr
+@
+
+\subsubsection{Cuantiles}
+@
+Los cuantiles son elementos que permiten dividir un conjunto ordenado de datos en un conjunto de partes de igual tamaño.
+Pueden ser: cuartiles (cuatro partes), deciles (diez partes) o percentiles (cien partes).
+
+En este caso, hemos hallado los cuartiles, los deciles y el cuantil 54 de la siguiente forma:
+
+<<>>=
+cuar1r<-quantile(radio,0.25) 
+cuar1r
+cuar2r<-quantile(radio,0.5) 
+cuar2r
+cuar3r<-quantile(radio,0.75) 
+cuar3r
+cuan54<-quantile(radio,0.54)
+cuan54
+dec1<-quantile(radio,0.1)
+dec1
+dec2<-quantile(radio,0.2)
+dec2
+dec3<-quantile(radio,0.3)
+dec3
+dec4<-quantile(radio,0.4)
+dec4
+dec5<-quantile(radio,0.5)
+dec5
+dec6<-quantile(radio,0.6)
+dec6
+dec7<-quantile(radio,0.7)
+dec7
+dec8<-quantile(radio,0.8)
+dec8
+dec9<-quantile(radio,0.9)
+dec9
+@
+
+\subsubsection{Rango intercuartílico}
+@
+El rango intercuartílico consiste en la diferencia entre el tercer cuartil y el primer cuartil. En R, lo calculamos
+de la siguiente manera:
+
+<<>>=
+rangintercuart<-cuar3r-cuar1r
+rangintercuart
+@
+
+
+\subsubsection{Rango interdecil}
+@
+El rango interdecil es la diferencia entre el noveno y el primer decil. Se halla de la siguiente forma:
+
+<<>>=
+ranginterdecil<-dec9-dec1
+ranginterdecil
+@
+
+
+\subsection{Datos agrupados}
+@
+Ahora, nos disponemos a agrupar los datos de los radios por decenas, es decir, creamos tantas clases de equivalencia
+como decenas haya. En este caso, hay 5 decenas, por lo que en R, se obtendría así:
+
+
+<<>>=
+radio_agrupado<-cut(radio, breaks = c(0,10,20,30,40,50))
+radio_agrupado
+@
+
+Para añadir algo más de análisis, añadimos etiquetas a cada valor dependiendo de la clase de equivalencia en la que se encuentre.
+Po ejemplo, si el satélite se encuentra en la decena (0,10] será denominado muy pequeño y si está en la decena mayor,
+se denominará muy grande. Lo hallamos de la siguiente forma:
+
+<<>>=
+radio_agrupado_etiqueta<-cut(radio, 
+breaks = c(0,10,20,30,40,50),labels = 
+c("Muy pequeño", "Pequeño", "Mediano", "Grande","Muy grande"))
+radio_agrupado_etiqueta
+@
+
+
+\subsubsection{Frecuencias de datos agrupados}
+@
+Además, calcularemos las frecuencias de la misma forma que anteriormente, con la diferencia de que ahora, se hallarán
+de los datos agrupados. Calculamos la frecuencia absoluta y su acumulada:
+
+<<>>=
+frecAbsAgr<-table(radio_agrupado)
+frecAbsAgr
+frecAbsAcumAgr<-cumsum(frecAbsAgr)
+frecAbsAcumAgr
+@
+
+Y la relativa y su acumulada:
+
+<<>>=
+frecRelAgr<-frecrel(radio_agrupado)
+frecRelAgr
+frecRelAcumAgr<-cumsum(frecRelAgr)
+frecRelAcumAgr
+@
+
+
+\subsection{Visualización}
+@
+En esta parte vamos a realizar una representación de datos. En este caso, vamos a visualizar, a través de líneas
+verticales, la media artimética, la mediana, el rango intercuartílico, el rango interdecil y los mínimos y máximos de tchebychev.
+
+<<>>=
+mintchebychev <- mr-2*sdn
+mintchebychev
+maxtchebychev <- mr+2*sdn
+maxtchebychev
+@
+<<Figura 1, fig=TRUE, echo=FALSE>>=
+plot(frecrelradio, type="h", xlab="radio", 
+xlim=c(min(mintchebychev, min(unique(radio))),
+max(mintchebychev, max(unique(radio)))), 
+main="Datos satélites Urano (radio)")
+
+abline (v=c(mr, medianr, mintchebychev, 
+maxtchebychev, rangintercuart, ranginterdecil), 
+col=c("purple","yellow","green","orange","pink","magenta"),
+ lty=c(2,2,2,2), lwd=c(2,2,2,2))
+
+legend("topright", legend=c("media aritmética", "mediana", "min tchebychev", 
+"max tchebychev","r. intercuartilico", "r. interdecilico"), 
+fill=c("purple","yellow","green","orange", "pink", "magenta"))
+@
+
+
+\subsection{Otros cálculos}
+@
+Por último, vamos a realizar el cálculo de cálculos datos que pueden resultar relevantes a la hora 
+de la analítica de datos, como pueden ser la obtención del rango del radio o su ordenación.
+
+\subsubsection{Rango}
+@
+El rango de un conjunto de datos, consiste en la diferencia entre el valor más alto y el mínimo.
+En R, lo hemos realizado de la siguiente forma:
+
+<<>>=
+rangor<-max(radio)-min(radio)
+rangor
+@
+
+\subsubsection{Ordenación}
+@
+Además, hemos añadido operaciones donde se muestran los datos de los radios ordenados ascendentemente y
+descentemente:
+
+<<>>=
+so<-s[order(radio),]
+so
+soi<-s[rev(order(radio)),]
+soi
+radio_ordenado<-radio[order(radio)]
+radio_ordenado
+radio_ordenadorev<-radio[rev(order(radio))]
+radio_ordenadorev
+@
+
+\subsubsection{Lectura datos de Excel}
+El último cálculo realizado ha sido leer datos de un archivo Excel. Para los análisis anteriores, leíamos los
+datos de un archivo .txt y a través de la función read.table obteníamos los datos. A pesar del fácil manejo para 
+la lectura de datos de un .txt, no es siempre la más adecuada, ya que cuando el número de columnas aumenta,
+se hace más difícil la distribución de los datos en un .txt. Por este motivo, en un archivo Excel sería más 
+útil esta distribución, por lo que hemos querido añadir la lectura de datos de un Excel.
+Para ello, hemos transportado los  datos desde el txt hasta el Excel y 
+ya en R, instalamos los siguientes paquetes y librería:
+
+
+<<>>=
+install.packages("pastecs")
+install.packages("xlsx")
+library(xlsx)
+@
+
+Una vez incorporados, para la lectura realizamos lo siguiente:
+
+<<>>=
+s_excel<-read.xlsx("satelites.xlsx",1)
+@
+
+
+\section{Análisis mpg de cardata}
+@
+Para este análisis, vamos a leer los datos del fichero cardata.sav y analizar la variable mpg. A diferencia del
+análisis anterior, vamos a leer un fichar .sav (SPSS) y no .txt. Para la correcta lectura de este archivo, primero
+tenemos que añadir la librería foreign. Tenemos dos opciones para añadirla. La primera, cosnsite en 
+abrir el archivo RProfile y añadir "foreign" a la parte de dp, donde se encuentran
+las librerías que se instalan por defecto al abrir R. La segunda opción sería ejecutar lo siguiente:
+
+<<>>=
+library(foreign)
+@
+
+Una vez que tenemos la librería instalada, leemos el archivo cardata,sav y lo guardamos en una variable que
+denominaremos cardata:
+
+<<>>=
+cardata<-read.spss("cardata.sav")
+@
+
+Para facilitarnos los diferentes análisis, guardaremos los datos de mpg en una variable denominada mpg:
+
+<<>>=
+mpg=cardata$mpg
+mpg
+@
+
+Ahora, nos surge un problema que tenemos que resolver. En la columna mpg se encuentra algun valor nulo (NA), por
+lo que si intentamos realizar algún cálculo con ella, el resultado sería NA, ya que no podría realizarse. 
+Por lo tanto, debemos de deshacernos de estos valores nulos. Lo hacemos de la siguiente forma:
+
+<<>>=
+mpg<-mpg[!is.na(mpg)]
+mpg
+@
+
+Una vez elminados estos valores nulos nos disponemos a hacer los análisis correspondientes (en este apartado no
+realizaremos los análisis de frecuencias, ya que no es necesario).
+
+\subsection{Segundo análisis datos: media aritmética y moda }
+@
+
+\subsubsection{Media aritmética}
+@
+Realizamos el cálculo de la media aritmética de mpg:
+
+<<>>=
+m_mpg<-mean(mpg)
+m_mpg
+@
+
+\subsubsection{Moda}
+@
+Ahora, realizamos el cálculo de la moda. Para ello, antes tendremos que instalar el paquete y la librería
+correspondientes:
+
+<<>>=
+install.packages("modeest")
+library(modeest)
+@
+
+
+Ahora, ya podremos obtener la moda:
+
+<<>>=
+modaMpg<-mfv(mpg)
+modaMpg
+@
+
+\subsection{Tercer análisis de datos: medidas de dispersión}
+@
+Nos disponemos a realizar el cálculo de las medidas de dispersión de la variable mpg. Realizaremos el cálculo de
+la desviación estándar y de la varianza.
+
+\subsubsection{Desviación estándar}
+@
+Ahora, vamos a realizar el cálculo de la desviación estándar. Como hemos comentado en el análisis anterior,
+la función que proporciona R no halla el resultado que más nos interesa, que sería la siguiente:
+
+<<>>=
+sdR<-sd(mpg)
+sdR
+@
+
+Al no ser el resultado más interesante, vamos a utilizar la función creada en el análisis anterior (sd_nuestra). Para
+ello, primero tenemos que abrir el archivo .R donde la función está creada:
+
+<<>>=
+source("sd_nuestra.R")
+@
+
+Posteriormente, la usamos y hallamos el valor de la desviación estándar que nos interesa:
+
+<<>>=
+sdN<-sd_nuestra(mpg)
+sdN
+@
+
+\subsubsection{Varianza}
+@
+Realizamos el cálculo de la varianza que nos proporciona R. Al igual que la desviación estándar,
+no es la que más nos interesa:
+
+<<>>=
+varR<-var(mpg)
+varR
+@ 
+
+Para calcular el resultado que nos interesa, obtenemos de forma teórica utilizamos 
+la función, donde previamente abrimos el archivo de R donde fue creada:
+
+<<>>=
+source("var_nuestra.R")
+@
+
+Una vez lo hemos abierto, podemos hallar la varianza con el procedimiento teórico:
+
+<<>>=
+varN<-var_nuestra(mpg)
+varN
+@
+
+\subsection{Cuarto análisis de datos: medidas de ordenación}
+@
+Vamos a realizar las medidas de ordenación, es decir, la mediana y el cálculo de los cuantiles de la variable mpg.
+
+\subsubsection{Mediana}
+@
+Realizamos el cálculo de la mediana de mpg:
+
+<<>>=
+mdn_mpg<-median(mpg)
+mdn_mpg
+@
+
+\subsubsection{Cuantiles}
+@
+Procedemos al cálculo de los cuartiles y deciles de mpg:
+
+<<>>=
+q1<-quantile(mpg,0.25)
+q1 
+q2<-quantile(mpg,0.5)
+q2
+q3<-quantile(mpg,0.75)
+q3 
+dec1<-quantile(mpg,0.1)
+dec1
+dec2<-quantile(mpg,0.2)
+dec2
+dec3<-quantile(mpg,0.3)
+dec3
+dec4<-quantile(mpg,0.4)
+dec4
+dec5<-quantile(mpg,0.5)
+dec5
+dec6<-quantile(mpg,0.6)
+dec6
+dec7<-quantile(mpg,0.7)
+dec7
+dec8<-quantile(mpg,0.8)
+dec8
+dec9<-quantile(mpg,0.9)
+dec9 
+@
+
+\subsubsection{Rango intercuartílico}
+@
+Calculamos el rango intercuantílico de mpg:
+
+<<>>=
+rangintercuart<-q3-q1
+rangintercuart
+@
+\subsubsection{Rango interdecil}
+Calculamos el rango interdecil de mpg:
+
+<<>>=
+ranginterdecil<-dec9-dec1
+ranginterdecil
+@
+
+\subsection{Datos agrupados}
+Ahora vamos a agrupar los datos de mpg por decenas al igual que con los satélites:
+
+<<>>=
+mpg_agrupado<-cut(mpg, breaks=c(0,10,20,30,40,50))
+mpg_agrupado
+@
+A continuación, vamos a añadir etiquetas a cada valor agrupado:
+
+<<>>=
+mpg_agrupado_etiqueta<-cut(mpg, breaks=c(0,10,20,30,40,50),
+ labels = c("Consumo muy bajo", 
+"Consumo bajo", "Consumo medio", 
+"Consumo alto", "Consumo muy alto"))
+mpg_agrupado_etiqueta
+@
+
+\subsection{Visualización}
+@
+Vamos a representar gráficamente los cálculos estadísticos de mpg al igual que con los satélites:
+
+<<>>=
+mintchebychev <- m_mpg-2*sdN
+mintchebychev
+maxtchebychev <- m_mpg+2*sdN
+maxtchebychev
+@
+<<Figura 2, fig=TRUE, echo=FALSE>>=
+plot(frecrelmpg, type="h", xlab="mpg", 
+xlim=c(min(mintchebychev,
+min(unique(mpg))),max(mintchebychev, max(unique(mpg)))), 
+main="Datos cardata (mpg)")
+abline (v=c(m_mpg, mdn_mpg, mintchebychev, maxtchebychev, 
+rangintercuart, ranginterdecil), 
+col=c("purple","yellow","green","orange", "pink", "magenta"), 
+lty=c(2,2,2,2), lwd=c(2,2,2,2))
+legend("topright", legend=c("media aritmética", "mediana", "min tchebychev", 
+"max tchebychev", "r. intercuartilico",
+"r. interdecilico"), fill=c("purple","yellow","green","orange", 
+"pink", "magenta"))
+@
+
+\subsection{Otros cálculos}
+@
+
+\subsubsection{Rango}
+@
+Realizamos el rango de los datos de mpg:
+
+<<>>=
+rangompg<-max(mpg)-min(mpg)
+rangompg
+@
+
+
+\subsubsection{Ordenación}
+Ordenamos mpg en orden ascendente:
+
+<<>>=
+mpg_ordenado<-mpg[order(mpg)]
+mpg_ordenado
+@
+
+
+\subsubsection{Lectura datos de Excel}
+@
+Igual que el análisis anterior, en este script volvemos a realizar la lectura de un archivo Excel.
+En este análisis, se puede comprobar mejor la utilidad que tiene leer archivos de Excel, ya que
+el número de columnas es elevado y en un archivo Excel se organiza mejor. Para ello, hemos transformado
+el archivo.sav en Excel y hemos realizado lo mismo que anteriormente. Instalamos los siguientes paquetes
+y librerías:
+
+
+<<>>=
+install.packages("pastecs")
+install.packages("xlsx")
+library(xlsx)
+@
+
+Y una vez incorporados, realizamos lo siguiente para la lectura:
+
+<<>>=
+cardata_excel<-read.xlsx("cardata.xlsx",1)
+@
+
+
+\section{Conclusión}
+@
+En esta práctica se ha aprendido a como realizar los cálculos básicos de estadística
+pedidos en el enunciado, como pueden ser la media aritmética o medidas de dispersión y 
+ordenación, utilizando el lenguaje R y su IDE Rgui. Además, hemos añadido 
+modificaciones sobre lo pedido. Por ejemplo, hemos añadido el cálculo de la moda,
+hemos agrupado los datos y calculado sus frecuencias y además rangos intercuatilico
+e interdecil. También, se han realizado lectura de datos de otros ficheros 
+diferentes a los proporcionados por el enunciado (txt y sav) como por ejemplo 
+un archivo excel (xlsx). Por último, para la realización de esta memoria, 
+hemos utilizado las herramientas Sweave y Latex para la producción de documentos 
+científicos relacionados con los estudios de datos.
+@
+\end{document}
